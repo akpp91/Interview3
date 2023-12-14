@@ -1,79 +1,87 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import Header from '../common/DynamicHeader'
-import DynamicInput from '../common/DynamicInput'
-
-
-
+import { StyleSheet, View, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import Header from '../common/DynamicHeader';
+import InputField from '../common/InputField';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { CheckBox, Text } from '@rneui/themed';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Card } from '../common/Card';
+import { CardSection } from '../common/CardSection';
 
 const MyProfile = () => {
-
-  const [isChecked, setChecked] = useState(false);
-
-  const handleToggleCheck = () => {
-    setChecked(!isChecked);
-  };
-
-  const handleDateChange = () => {
-    // Implement date picker logic here
-    console.log('Date selected');
-  };
-
-  const handleUpdatePress = () => {
-    // Implement update button logic here
-    console.log('Update button pressed');
-  };
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthPlace, setBirthPlace] = useState('');
+  const [altPhone, setAltPhone] = useState('');
+  const [selectedIndex, setIndex] = React.useState(0);
 
   return (
     <View>
-    <Header 
-    title={'My Profile'}
-    />   
-      <View style={styles.container}>
-    
+      <Header title={'My Profile'} />
 
-      <DynamicInput
-        inputType="text"
-        backgroundColor="lightblue"
-        textColor="black"
-        placeholderColor="gray"
-        isMandatory={true}
-        label="Name"
-        initialValue=""
-      />
-      <DynamicInput
-        inputType="checkbox"
-        textColor="black"
-        isMandatory={false}
-        label="Male"
-        isChecked={isChecked}
-        onToggleCheck={handleToggleCheck}
-      />
-      <DynamicInput
-        inputType="date"
-        textColor="black"
-        isMandatory={true}
-        label="Date of Birth"
-        onDateChange={handleDateChange}
-      />
-      <DynamicInput
-        inputType="button"
-        buttonStyle={{ backgroundColor: 'green', width: 100, height: 40, borderRadius: 5, color: 'white' }}
-        onUpdatePress={handleUpdatePress}
-      />
-    </View>   
+
+      <ScrollView style={styles.scrollView}>
+<Card>
+        <CardSection>
+        <InputField label="Name" value={name} setValue={setName} />
+        </CardSection>
+
+        <CardSection>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginVertical: 20 }}>
+        
+        <Text h4>Gender</Text>
+          <TouchableOpacity
+            onPress={() => setIndex(0)}
+            style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}
+          >
+            <CheckBox
+              checked={selectedIndex === 0}
+              onPress={() => setIndex(0)}
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+            />
+            <Text>Male</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setIndex(1)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <CheckBox
+              checked={selectedIndex === 1}
+              onPress={() => setIndex(1)}
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+            />
+            <Text>Female</Text>
+          </TouchableOpacity>
+        </View>
+        </CardSection>
+
+        <CardSection>
+        <InputField label="Email" value={email} setValue={setEmail} />
+        </CardSection>
+
+        <CardSection>
+        <InputField label="Place of Birth" value={birthPlace} setValue={setBirthPlace} />
+        </CardSection>
+
+        <CardSection>
+        <InputField label="Alternative Phone Number" value={altPhone} setValue={setAltPhone} />
+        </CardSection>
+        
+        </Card>
+      </ScrollView>
     </View>
-  )
-}
-
-export default MyProfile
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20, // Adjust the radius as needed
-    borderTopRightRadius: 20, // Adjust the radius as needed
-    paddingHorizontal: 16, // Adjust the padding as needed
+  scrollView: {
+    // flexGrow:1,
+    // flex: 1,
+    height: 500
+    // padding: 20, // adds padding around the content for scrolling space
+    // backgroundColor: '#fff', // change this to your desired background color
   },
-})
+
+});
+
+export default MyProfile;
