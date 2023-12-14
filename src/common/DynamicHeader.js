@@ -12,13 +12,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Icon as MIcon } from 'react-native-vector-icons/MaterialIcons';
 import Avatar1 from './Avatar';
+import Toast from 'react-native-toast-message';
 
 
 const Header = (props) => {
 
 
   const goBack = () => {
-console.log("go back pressed");
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Going Back!',
+      text2: `back Button Pressed`,
+    });
+
+
   };
   return (
     <SafeAreaView style={styles.headerContainer}>
@@ -34,7 +42,9 @@ console.log("go back pressed");
     <Avatar1 /> 
     <View style={styles.bottomContainer}>
     </View>      
+    <Toast/>
     </SafeAreaView>
+
   );
 };
 
