@@ -9,7 +9,7 @@
       <View>
             <GestureHandlerRootView >
             <SafeAreaView >
-          <MyProfile />
+             <MyProfile />
           </SafeAreaView>
           </GestureHandlerRootView>
       </View>

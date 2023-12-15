@@ -8,9 +8,6 @@ import {
 } from 'react-native';
 import { Header as HeaderRNE, Icon } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Icon as MIcon } from 'react-native-vector-icons/MaterialIcons';
 import Avatar1 from './Avatar';
 import Toast from 'react-native-toast-message';
 
@@ -25,9 +22,10 @@ const Header = (props) => {
       text1: 'Going Back!',
       text2: `back Button Pressed`,
     });
-
-
   };
+
+  
+
   return (
     <SafeAreaView style={styles.headerContainer}>
       <HeaderRNE
@@ -39,10 +37,13 @@ const Header = (props) => {
 
         centerComponent={{ text: props.title, style: styles.heading }}
       />
-    <Avatar1 /> 
-    <View style={styles.bottomContainer}>
-    </View>      
-    <Toast/>
+      <Avatar1 />
+      <View style={styles.mobileNumberContainer}>
+        <Text style={styles.mobileNumberText}>{"+91-"+props.mobileNumber}</Text>
+      </View>
+      <View style={styles.bottomContainer}>
+      </View>
+      <Toast />
     </SafeAreaView>
 
   );
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: '100%',
     paddingVertical: 15,
-    height: 350
+    height: 310
   },
   heading: {
     color: 'white',
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 5,
   },
-  
+
   avatarContainer: {
     alignItems: 'center',
     marginTop: 30
@@ -77,12 +78,20 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'white', 
-    borderTopLeftRadius: 20, 
-    borderTopRightRadius: 20, 
-    paddingHorizontal: 16, 
-    paddingVertical: 20, 
+    backgroundColor: 'white',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     alignItems: 'center',
+  },
+  mobileNumberContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  mobileNumberText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

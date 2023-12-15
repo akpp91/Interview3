@@ -21,29 +21,27 @@ const MyProfile = () => {
   const [birthPlaceError, setBirthPlaceError] = useState('');
 
 
-  const [altPhone, setAltPhone] = useState('');
-  const [altPhoneError, setAltPhoneError] = useState('');
+  const [altmobileNumber, setMobileNumber] = useState('');
+  const [mobileNumberError, setMobileNumberError] = useState('');
 
   const [selectedIndex, setIndex] = useState(0);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
-
   const showToast = () => {
-    
-     // Clear previous error messages
-  setNameError('');
-  setEmailError('');
-  setBirthPlaceError('');
-  setAltPhoneError('');
+    // Clear previous error messages
+    setNameError('');
+    setEmailError('');
+    setBirthPlaceError('');
+    setMobileNumberError('');
   
-    if (!name || !email || !birthPlace || !altPhone) {
+    if (!name || !email || !birthPlace || !altmobileNumber) {
       setNameError(!name ? 'Name is required' : '');
       setEmailError(!email ? 'Email is required' : '');
       setBirthPlaceError(!birthPlace ? 'Place of Birth is required' : '');
-      setAltPhoneError(!altPhone ? 'Alternative Phone Number is required' : '');
-
+      setMobileNumberError(!altmobileNumber ? 'Alternative Phone Number is required' : '');
+  
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -52,20 +50,47 @@ const MyProfile = () => {
       });
       return;
     }
+  
+    // Add a check for mobile number length
+    if (altmobileNumber.length !== 10) {
+      setMobileNumberError('Alternative Phone Number must be 10 digits');
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Validation Error',
+        text2: 'Alternative Phone Number must be 10 digits.',
+      });
+      return;
+    }
+  
+    // Log the values before clearing the form fields
+    console.log('Name:', name);
+    console.log('Gender:', selectedIndex === 0 ? 'Male' : 'Female');
+    console.log('Email:', email);
+    console.log('Place of Birth:', birthPlace);
+    console.log('Alternative Phone Number:', altmobileNumber);
+    console.log('Date of Birth:', selectedDate.toDateString());
+    console.log('Time of Birth:', selectedTime.toLocaleTimeString());
+  
     Toast.show({
       type: 'success',
       position: 'top',
       text1: 'Profile Updated!',
-      text2: `Name: ${name}\n Gender: ${selectedIndex === 0 ? 'Male' : 'Female'}\nEmail: ${email}\nPlace of Birth: ${birthPlace}\nAlternative Phone Number: ${altPhone}\nDate of Birth: ${selectedDate.toDateString()}\nTime of Birth: ${selectedTime.toLocaleTimeString()}\n`,
+      text2: `Name: ${name}\n Gender: ${selectedIndex === 0 ? 'Male' : 'Female'}\nEmail: ${email}\nPlace of Birth: ${birthPlace}\nAlternative Phone Number: ${altmobileNumber}\nDate of Birth: ${selectedDate.toDateString()}\nTime of Birth: ${selectedTime.toLocaleTimeString()}\n`,
     });
     // Clear the form fields
-  setName('');
-  setEmail('');
-  setBirthPlace('');
-  setAltPhone('');
-    
-};
-
+    setName('');
+    setEmail('');
+    setBirthPlace('');
+    setMobileNumber('');
+  };
+  
+  const handleMobileNumberChange = (text) => {
+    setMobileNumber(text);
+    // Clear mobile number error when user starts typing
+    setMobileNumberError('');
+  };
+  
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
@@ -91,16 +116,20 @@ const MyProfile = () => {
     hideTimePicker();
     setSelectedTime(date);
   };
-  
+
+
   return (
     <View>
-      <Header title={'My Profile'} />
+      <Header 
+      title={'My Profile'} 
+      mobileNumber={1234567890}
+      />
 
       <ScrollView style={styles.scrollView}>
         <Card>
           <CardSection>
-            <InputField label="Name" value={name} setValue={setName} error={nameError}
- />
+            <InputField label="Name" value={name} setValue={setName} error={nameError} isMandatory
+            />
           </CardSection>
 
           <CardSection>
@@ -132,23 +161,34 @@ const MyProfile = () => {
           </CardSection>
 
           <CardSection>
-            <InputField label="Email" value={email} setValue={setEmail}               error={emailError} />
+            <InputField label="Email" value={email} setValue={setEmail} isMandatory error={emailError} />
           </CardSection>
 
           <CardSection>
-            <InputField label="Place of Birth" value={birthPlace} setValue={setBirthPlace}               error={birthPlaceError}/>
+            <InputField 
+            label="Place of Birth" 
+            value={birthPlace} 
+            isMandatory 
+            setValue={setBirthPlace} 
+            error={birthPlaceError} />
           </CardSection>
 
-          <CardSection>
-            <InputField label="Alternative Phone Number" value={altPhone} setValue={setAltPhone}               error={altPhoneError}
- isMobile/>
-          </CardSection>
+          <InputField
+        label="Alternative Phone Number"
+        mobileNumber={altmobileNumber}
+        setValue={handleMobileNumberChange}
+        isMobile
+        error={mobileNumberError}
+        isMandatory
+      
+      />
 
           <CardSection >
             <TouchableOpacity onPress={showDatePicker}>
-              <Text h4 
-              style={{    margin: 20,
-              }}
+              <Text h4
+                style={{
+                  margin: 20,
+                }}
               >Date of Birth</Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -157,17 +197,19 @@ const MyProfile = () => {
               onConfirm={handleDateConfirm}
               onCancel={hideDatePicker}
             />
-            <Text 
-            style={{    marginLeft: 30
-            }}
+            <Text
+              style={{
+                marginLeft: 30
+              }}
             >{selectedDate.toDateString()}</Text>
           </CardSection>
 
           <CardSection>
             <TouchableOpacity onPress={showTimePicker}>
               <Text h4
-              style={{    margin: 20,
-              }}
+                style={{
+                  margin: 20,
+                }}
               >Time of Birth</Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -176,19 +218,20 @@ const MyProfile = () => {
               onConfirm={handleTimeConfirm}
               onCancel={hideTimePicker}
             />
-            <Text 
-            style={{    marginLeft: 30
-            }}
+            <Text
+              style={{
+                marginLeft: 30
+              }}
             >{selectedTime.toLocaleTimeString()}</Text>
           </CardSection>
 
           <CardSection style={{
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-    
-  }}>
-          <Button
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginVertical: 10,
+
+          }}>
+            <Button
               title="Update Profile"
               loading={false}
               loadingProps={{ size: 'small', color: 'white' }}
@@ -205,20 +248,20 @@ const MyProfile = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={ showToast}
-              
+              onPress={showToast}
+
             />
           </CardSection>
         </Card>
       </ScrollView>
-      <Toast/>
+      <Toast />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
-    height: 400,
+    height: 500,
   },
 });
 

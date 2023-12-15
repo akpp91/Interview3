@@ -34,7 +34,6 @@ const Avatar1 = () => {
 
         console.log('Selected Image URI: ', source.uri);
 
-        // Set the selected image as the avatar
         setAvatarSource(source);
         setModalVisible(false);
       }
