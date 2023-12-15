@@ -209,6 +209,7 @@ const MyProfile = () => {
               <Text h4
                 style={{
                   margin: 20,
+                
                 }}
               >Time of Birth</Text>
             </TouchableOpacity>
@@ -220,7 +221,7 @@ const MyProfile = () => {
             />
             <Text
               style={{
-                marginLeft: 30
+                marginLeft:30
               }}
             >{selectedTime.toLocaleTimeString()}</Text>
           </CardSection>
@@ -263,6 +264,10 @@ const styles = StyleSheet.create({
   scrollView: {
     height: 500,
   },
+  inputContainer: {
+    margin: 20,
+  },
+
 });
 
 export default MyProfile;
