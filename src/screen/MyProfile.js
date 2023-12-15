@@ -30,7 +30,6 @@ const MyProfile = () => {
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const showToast = () => {
-    // Clear previous error messages
     setNameError('');
     setEmailError('');
     setBirthPlaceError('');
@@ -51,7 +50,6 @@ const MyProfile = () => {
       return;
     }
   
-    // Add a check for mobile number length
     if (altmobileNumber.length !== 10) {
       setMobileNumberError('Alternative Phone Number must be 10 digits');
       Toast.show({
@@ -63,7 +61,6 @@ const MyProfile = () => {
       return;
     }
   
-    // Log the values before clearing the form fields
     console.log('Name:', name);
     console.log('Gender:', selectedIndex === 0 ? 'Male' : 'Female');
     console.log('Email:', email);
@@ -78,7 +75,6 @@ const MyProfile = () => {
       text1: 'Profile Updated!',
       text2: `Name: ${name}\n Gender: ${selectedIndex === 0 ? 'Male' : 'Female'}\nEmail: ${email}\nPlace of Birth: ${birthPlace}\nAlternative Phone Number: ${altmobileNumber}\nDate of Birth: ${selectedDate.toDateString()}\nTime of Birth: ${selectedTime.toLocaleTimeString()}\n`,
     });
-    // Clear the form fields
     setName('');
     setEmail('');
     setBirthPlace('');
@@ -87,7 +83,6 @@ const MyProfile = () => {
   
   const handleMobileNumberChange = (text) => {
     setMobileNumber(text);
-    // Clear mobile number error when user starts typing
     setMobileNumberError('');
   };
   
@@ -120,11 +115,12 @@ const MyProfile = () => {
 
   return (
     <View>
+ <Toast />
       <Header 
       title={'My Profile'} 
       mobileNumber={1234567890}
       />
-
+ 
       <ScrollView style={styles.scrollView}>
         <Card>
           <CardSection>
@@ -255,14 +251,14 @@ const MyProfile = () => {
           </CardSection>
         </Card>
       </ScrollView>
-      <Toast />
+     
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
-    height: 500,
+    height:500
   },
   inputContainer: {
     margin: 20,

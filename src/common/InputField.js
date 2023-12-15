@@ -37,7 +37,7 @@ const InputField = ({ label, value, mobileNumber,setValue, isMobile, error, inpu
 };
 
 const formatMobileNumber = (number) => {
-  return number; // Simply return the number without any prefix
+  return number; 
 };
 
 
